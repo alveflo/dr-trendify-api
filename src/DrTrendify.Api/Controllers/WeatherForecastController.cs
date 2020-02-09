@@ -44,7 +44,12 @@ namespace DrTrendify.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(Summaries[id]);
+            return Ok(new WeatherForecast 
+            {
+                Date = DateTime.Now.AddDays(id),
+                TemperatureC = -20,
+                Summary = Summaries[id]
+            });
         }
     }
 }
