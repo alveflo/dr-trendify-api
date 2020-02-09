@@ -35,5 +35,16 @@ namespace DrTrendify.Api.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<WeatherForecast> GetForecast([FromQuery] int id) 
+        {
+            if (id < 0 || id > Summaries.Length)
+            {
+                return NotFound();
+            }
+
+            return Ok(Summaries[id]);
+        }
     }
 }
