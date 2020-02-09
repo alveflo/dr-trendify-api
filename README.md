@@ -1,5 +1,5 @@
-# The great dr. Trendify
-Server implementation of the great Dr Trendify
+# The great dr. Trendify :chart_with_upwards_trend:
+Server implementation of the great Dr Trendify 
 
 ## Develop
 #### Unix
