@@ -37,7 +37,7 @@ namespace DrTrendify.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<WeatherForecast> GetForecast([FromQuery] int id) 
+        public ActionResult<WeatherForecast> GetForecast(int id) 
         {
             if (id < 0 || id > Summaries.Length)
             {
