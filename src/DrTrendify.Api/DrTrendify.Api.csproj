@@ -1,8 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <ItemGroup>
+    <ProjectReference Include="..\DrTrendify.NovemberScraper\DrTrendify.NovemberScraper.csproj" />
+    <ProjectReference Include="..\DrTrendify.Core\DrTrendify.Core.csproj" />
+    <ProjectReference Include="..\DrTrendify.Persistance.Redis\DrTrendify.Persistance.Redis.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
-
 </Project>

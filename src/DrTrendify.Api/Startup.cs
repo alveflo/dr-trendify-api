@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DrTrendify.Core.Interfaces;
+using DrTrendify.Core.Interfaces.Repositories;
+using DrTrendify.Core.Services.GetStockdetails;
+using DrTrendify.Core.Services.PopulateStockdetails;
+using DrTrendify.NovemberScraper;
+using DrTrendify.Persistance.Redis.Extensions;
+using DrTrendify.Persistance.Redis.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace DrTrendify.Api
 {
@@ -26,6 +26,18 @@ namespace DrTrendify.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.Configure<NovemberScraperConfig>(Configuration.GetSection("NovemberScraperConfig"));
+            services.AddTransient<IStocklistFetcher, NovemberStocklistFetcher>();
+
+            var redisConfig = new RedisConfiguration();
+            Configuration.GetSection("RedisConfiguration").Bind(redisConfig);
+
+            services.AddRedisDatabase(redisConfig);
+            services.AddTransient<IStockdetailRepository, StockdetailRepository>();
+
+            services.AddTransient<IPopulateStockdetailsService, PopulateStockdetailsService>();
+            services.AddTransient<IGetStockdetailsService, GetStockdetailsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
