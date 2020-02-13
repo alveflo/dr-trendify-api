@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DrTrendify.Core.Services.PopulateStockdetails;
 using DrTrendify.Core.Services.GetStockdetails;
 using DrTrendify.Core.Services.GetStockdetailById;
+using System.Linq;
 
 namespace DrTrendify.Api.Controllers
 {
@@ -31,6 +32,24 @@ namespace DrTrendify.Api.Controllers
                 return Ok(result);
 
             return NotFound();
+        }
+
+        [HttpGet("positive")]
+        public IActionResult GetPositives()
+        {
+            var stockDetails = _getStockdetailsService.GetStockDetails()
+                .Where(x => x.IsAllPositiveYield());
+
+            return Ok(stockDetails);
+        }
+
+        [HttpGet("trending")]
+        public IActionResult GetTrending()
+        {
+            var stockDetails = _getStockdetailsService.GetStockDetails()
+                .Where(x => x.IsTrending());
+
+            return Ok(stockDetails);
         }
 
         [HttpGet]

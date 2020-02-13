@@ -18,9 +18,9 @@ namespace DrTrendify.Core.Services.PopulateStockdetails
 
         public void Populate()
         {
-            var data = _fetcher.GetStockDetails();
+            var stockDetails = _fetcher.GetStockDetails();
 
-            _repository.Upsert(data);
+            _repository.Upsert(stockDetails);
         }
     }
 }
