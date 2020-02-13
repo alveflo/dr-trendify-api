@@ -27,6 +27,13 @@ namespace DrTrendify.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(o => o.AddPolicy("AllowAll", builder => 
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }));
 
             services.Configure<NovemberScraperConfig>(Configuration.GetSection("NovemberScraperConfig"));
             services.AddTransient<IStocklistFetcher, NovemberStocklistFetcher>();
@@ -49,6 +56,8 @@ namespace DrTrendify.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
 
