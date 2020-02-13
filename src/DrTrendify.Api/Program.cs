@@ -25,7 +25,7 @@ namespace DrTrendify.Api
                     webBuilder.UseStartup<Startup>();
 #if DEBUG
 #else
-                    var port = Environment.GetEnvironmentVariable("PORT");
+                    var port = System.Environment.GetEnvironmentVariable("PORT");
                     webBuilder.UseUrls("http://*:" + port);
 #endif
                 });
