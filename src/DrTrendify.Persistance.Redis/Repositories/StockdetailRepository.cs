@@ -16,6 +16,11 @@ namespace DrTrendify.Persistance.Redis.Repositories
             _redisClient = redisClient;
         }
 
+        public StockDetail GetById(string id)
+        {
+            return _redisClient.Get<StockDetail>(id);
+        }
+
         public IEnumerable<StockDetail> GetAll() 
         {
             var keys = _redisClient.GetAllKeys();

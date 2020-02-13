@@ -1,5 +1,6 @@
 using DrTrendify.Core.Interfaces;
 using DrTrendify.Core.Interfaces.Repositories;
+using DrTrendify.Core.Services.GetStockdetailById;
 using DrTrendify.Core.Services.GetStockdetails;
 using DrTrendify.Core.Services.PopulateStockdetails;
 using DrTrendify.NovemberScraper;
@@ -38,6 +39,7 @@ namespace DrTrendify.Api
 
             services.AddTransient<IPopulateStockdetailsService, PopulateStockdetailsService>();
             services.AddTransient<IGetStockdetailsService, GetStockdetailsService>();
+            services.AddTransient<IGetStockdetailByIdService, GetStockdetailByIdService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
