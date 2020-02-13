@@ -1,5 +1,4 @@
-using System;
-using System.Threading.Tasks;
+using System.Linq;
 using DrTrendify.Core.Interfaces.Repositories;
 using DrTrendify.Core.Entities;
 using ServiceStack.Redis;
@@ -31,15 +30,18 @@ namespace DrTrendify.Persistance.Redis.Repositories
 
         public void Upsert(IEnumerable<StockDetail> stockDetails)
         {
+            _redisClient.RemoveAll(stockDetails.Select(x => x.Id));
+
             foreach (var stockDetail in stockDetails)
-            {
                 _redisClient.Add(stockDetail.Id, stockDetail);
-            }
         }
 
         public void Upsert(StockDetail stockDetail)
         {
-            _redisClient.Add(stockDetail.Id, stockDetail);
+            if (_redisClient.ContainsKey(stockDetail.Id))
+                _redisClient.Replace(stockDetail.Id, stockDetail);
+            else
+                _redisClient.Add(stockDetail.Id, stockDetail);
         }
     }
 }

@@ -6,7 +6,6 @@ using DrTrendify.Core.Entities;
 using DrTrendify.NovemberScraper.DataContracts;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace DrTrendify.NovemberScraper
 {
@@ -16,7 +15,7 @@ namespace DrTrendify.NovemberScraper
         public string PricePath { get; set; }
         public string HistoryPath { get; set; }
         public string IndicatorPath { get; set; }
-        public string AlfaIdListUrl { get; set; } = "https://raw.githubusercontent.com/dluco-/babyrage/master/stocklist/sv.json";
+        public string AlfaIdListUrl { get; set; }
     }
 
     public class NovemberStocklistFetcher : IStocklistFetcher
@@ -40,9 +39,7 @@ namespace DrTrendify.NovemberScraper
                 Get<StockIndicatorDetail>(_config.IndicatorPath)
             );
 
-            AddAlfaIds(stockDetails, alfaIds);
-
-            return stockDetails;
+            return AddAlfaIds(stockDetails, alfaIds);
         }
 
         private IEnumerable<StockDetail> AddAlfaIds(IEnumerable<StockDetail> stockDetails, IEnumerable<AlfaIdentifierResponse> alfaIds)
@@ -56,10 +53,20 @@ namespace DrTrendify.NovemberScraper
 
                 if (alfaId == null) 
                 {
-                    noMatches.Add(stockDetail.Id);
+                    if (AlfaIdLookup.Lookup.ContainsKey(stockDetail.Id))
+                    {
+                        var id = AlfaIdLookup.Lookup[stockDetail.Id];
+                        alfaId = alfaIds.First(x => x.Id == id);
+                    }
+                    else
+                    {
+                        noMatches.Add(stockDetail.Id);
+                    }
                 }
-                else 
+
+                if (alfaId != null)
                 {
+                    stockDetail.AlfaId = alfaId.Id;
                     matches.Add(stockDetail);
                 }
             }

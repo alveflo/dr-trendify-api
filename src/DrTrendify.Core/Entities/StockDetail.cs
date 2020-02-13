@@ -3,6 +3,7 @@ namespace DrTrendify.Core.Entities
     public class StockDetail
     {
         public string Id { get; set; }
+        public string AlfaId { get; set; }
 
         public string Name { get; set; }
 
