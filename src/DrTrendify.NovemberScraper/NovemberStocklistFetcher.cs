@@ -6,6 +6,7 @@ using DrTrendify.Core.Entities;
 using DrTrendify.NovemberScraper.DataContracts;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace DrTrendify.NovemberScraper
 {
@@ -15,6 +16,7 @@ namespace DrTrendify.NovemberScraper
         public string PricePath { get; set; }
         public string HistoryPath { get; set; }
         public string IndicatorPath { get; set; }
+        public string AlfaIdListUrl { get; set; } = "https://raw.githubusercontent.com/dluco-/babyrage/master/stocklist/sv.json";
     }
 
     public class NovemberStocklistFetcher : IStocklistFetcher
@@ -30,11 +32,39 @@ namespace DrTrendify.NovemberScraper
 
         public IEnumerable<StockDetail> GetStockDetails()
         {
-            return Map(
+            var alfaIds = GetAlfaIds(_config.AlfaIdListUrl);
+
+            var stockDetails = Map(
                 Get<StockPriceDetail>(_config.PricePath),
                 Get<StockHistoryDetail>(_config.HistoryPath),
                 Get<StockIndicatorDetail>(_config.IndicatorPath)
             );
+
+            AddAlfaIds(stockDetails, alfaIds);
+
+            return stockDetails;
+        }
+
+        private IEnumerable<StockDetail> AddAlfaIds(IEnumerable<StockDetail> stockDetails, IEnumerable<AlfaIdentifierResponse> alfaIds)
+        {
+            var noMatches = new List<string>();
+            var matches = new List<StockDetail>();
+
+            foreach (var stockDetail in stockDetails)
+            {
+                var alfaId = alfaIds.FirstOrDefault(x => x.Name.ToLower() == stockDetail.Name.ToLower());
+
+                if (alfaId == null) 
+                {
+                    noMatches.Add(stockDetail.Id);
+                }
+                else 
+                {
+                    matches.Add(stockDetail);
+                }
+            }
+
+            return matches;
         }
 
         private T[] Get<T>(string url) where T : class
@@ -43,6 +73,14 @@ namespace DrTrendify.NovemberScraper
             var response = _client.Get(request);
 
             return JsonConvert.DeserializeObject<T[]>(response.Content);
+        }
+
+        private IEnumerable<AlfaIdentifierResponse> GetAlfaIds(string url)
+        {
+            var request = new RestRequest(url, DataFormat.Json);
+            var response = _client.Get(request);
+            
+            return JsonConvert.DeserializeObject<AlfaIdentifierResponse[]>(response.Content);
         }
 
         private IEnumerable<StockDetail> Map(StockPriceDetail[] priceDetails, StockHistoryDetail[] historyDetails, StockIndicatorDetail[] indicatorDetails)
