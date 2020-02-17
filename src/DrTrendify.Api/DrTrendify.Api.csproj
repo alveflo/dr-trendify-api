@@ -5,6 +5,7 @@
     <ProjectReference Include="..\DrTrendify.Core\DrTrendify.Core.csproj" />
     <ProjectReference Include="..\DrTrendify.Persistance.Redis\DrTrendify.Persistance.Redis.csproj" />
     <ProjectReference Include="..\DrTrendify.AlfaScraper\DrTrendify.AlfaScraper.csproj" />
+    <ProjectReference Include="..\DrTrendify.FeatureToggling.ConfigCat\DrTrendify.FeatureToggling.ConfigCat.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -1,9 +1,12 @@
 using DrTrendify.AlfaScraper;
+using DrTrendify.Core.FeatureToggling;
 using DrTrendify.Core.Interfaces;
 using DrTrendify.Core.Interfaces.Repositories;
 using DrTrendify.Core.Services.GetStockdetailById;
 using DrTrendify.Core.Services.GetStockdetails;
 using DrTrendify.Core.Services.PopulateStockdetails;
+using DrTrendify.FeatureToggling.ConfigCat;
+using DrTrendify.FeatureToggling.ConfigCat.Extensions;
 using DrTrendify.NovemberScraper;
 using DrTrendify.Persistance.Redis.Extensions;
 using DrTrendify.Persistance.Redis.Repositories;
@@ -38,18 +41,22 @@ namespace DrTrendify.Api
 
             services.Configure<NovemberScraperConfig>(Configuration.GetSection("NovemberScraperConfig"));
             services.Configure<AlfaScraperConfig>(Configuration.GetSection("AlfaScraperConfig"));
-            services.AddTransient<IStocklistFetcher, NovemberStocklistFetcher>();
 
             var redisConfig = new RedisConfiguration();
             Configuration.GetSection("RedisConfiguration").Bind(redisConfig);
-
             services.AddRedisDatabase(redisConfig);
-            services.AddTransient<IStockdetailRepository, StockdetailRepository>();
 
+            var configCatConfig = new ConfigCatConfig();
+            Configuration.GetSection("ConfigCatConfig").Bind(configCatConfig);
+            services.AddConfigCat(configCatConfig);
+
+            services.AddTransient<IStockdetailRepository, StockdetailRepository>();
+            services.AddTransient<IStocklistFetcher, NovemberStocklistFetcher>();
             services.AddTransient<IPopulateStockdetailsService, PopulateStockdetailsService>();
             services.AddTransient<IGetStockdetailsService, GetStockdetailsService>();
             services.AddTransient<IGetStockdetailByIdService, GetStockdetailByIdService>();
             services.AddTransient<IBabyrageTrendAnalyzer, BabyrageTrendAnalyzer>();
+            services.AddTransient<IFeatureFlagProvider, FeatureFlagProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
