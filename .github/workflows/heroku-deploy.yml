@@ -5,6 +5,13 @@ on:
       - master
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Print
+       run: |
+         echo ${{ secrets.NovemberBaseUrl }}
+         echo ${{ secrets.CatConfigKey }}
   release:
     runs-on: ubuntu-latest
     steps:
