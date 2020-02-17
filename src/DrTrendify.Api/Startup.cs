@@ -49,7 +49,7 @@ namespace DrTrendify.Api
 
             var configCatConfig = new ConfigCatConfig();
             Configuration.GetSection("ConfigCatConfig").Bind(configCatConfig);
-            Console.WriteLine($"Config cat api key: {configCatConfig.ApiKey}");
+            Console.WriteLine($"Config cat api key: {configCatConfig.Key}");
 
             services.AddConfigCat(configCatConfig);
 
