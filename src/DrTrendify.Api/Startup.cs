@@ -50,6 +50,7 @@ namespace DrTrendify.Api
             var configCatConfig = new ConfigCatConfig();
             Configuration.GetSection("CatConfig").Bind(configCatConfig);
             Console.WriteLine($"Config cat api key: {configCatConfig.Key}");
+            Console.WriteLine($"Redis api key: {redisConfig.ConnectionString}");
 
             services.AddConfigCat(configCatConfig);
 
