@@ -1,3 +1,4 @@
+using System;
 using DrTrendify.AlfaScraper;
 using DrTrendify.Core.FeatureToggling;
 using DrTrendify.Core.Interfaces;
@@ -48,6 +49,8 @@ namespace DrTrendify.Api
 
             var configCatConfig = new ConfigCatConfig();
             Configuration.GetSection("ConfigCatConfig").Bind(configCatConfig);
+            Console.WriteLine($"Config cat api key: {configCatConfig.ApiKey}");
+
             services.AddConfigCat(configCatConfig);
 
             services.AddTransient<IStockdetailRepository, StockdetailRepository>();
