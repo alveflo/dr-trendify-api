@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace DrTrendify.NovemberScraper.DataContracts
 {
-    public class AlfaIdentifierResponse
+    internal sealed class AlfaIdentifierResponse
     {
         [JsonProperty("api_id")]
         public string Id { get; set; }

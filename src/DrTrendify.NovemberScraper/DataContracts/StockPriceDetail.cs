@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace DrTrendify.NovemberScraper.DataContracts
 {
-    public class StockPriceDetail
+    internal sealed class StockPriceDetail
     {
         [JsonProperty("insref")]
         public long Id { get; set; }

@@ -1,3 +1,4 @@
+using DrTrendify.AlfaScraper;
 using DrTrendify.Core.Interfaces;
 using DrTrendify.Core.Interfaces.Repositories;
 using DrTrendify.Core.Services.GetStockdetailById;
@@ -36,6 +37,7 @@ namespace DrTrendify.Api
                 }));
 
             services.Configure<NovemberScraperConfig>(Configuration.GetSection("NovemberScraperConfig"));
+            services.Configure<AlfaScraperConfig>(Configuration.GetSection("AlfaScraperConfig"));
             services.AddTransient<IStocklistFetcher, NovemberStocklistFetcher>();
 
             var redisConfig = new RedisConfiguration();
@@ -47,6 +49,7 @@ namespace DrTrendify.Api
             services.AddTransient<IPopulateStockdetailsService, PopulateStockdetailsService>();
             services.AddTransient<IGetStockdetailsService, GetStockdetailsService>();
             services.AddTransient<IGetStockdetailByIdService, GetStockdetailByIdService>();
+            services.AddTransient<IBabyrageTrendAnalyzer, BabyrageTrendAnalyzer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
