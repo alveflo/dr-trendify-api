@@ -5,13 +5,6 @@ on:
       - master
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-     - name: Print
-       run: |
-         echo ${{ secrets.NovemberBaseUrl }}
-         echo ${{ secrets.CatConfigKey }}
   release:
     runs-on: ubuntu-latest
     steps:
@@ -28,15 +21,6 @@ jobs:
       uses: actions/heroku@master
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        NovemberScraperConfig__BaseUrl: ${{ secrets.NovemberBaseUrl }}
-        NovemberScraperConfig__PricePath: ${{ secrets.PricePath }}
-        NovemberScraperConfig__HistoryPath: ${{ secrets.HistoryPath }}
-        NovemberScraperConfig__IndicatorPath: ${{ secrets.IndicatorPath }}
-        NovemberScraperConfig__AlfaIdListUrl: ${{ secrets.AlfaIdListUrl }}
-        RedisConfiguration__ConnectionString: ${{ secrets.RedisConnectionString }}
-        CatConfig__Key: ${{ secrets.CatConfigKey }}
-        AlfaScraperConfig__BaseUrl: ${{ secrets.AlfaBaseUrl }}
-        AlfaScraperConfig__DetailsPath: ${{ secrets.AlfaDetailsUrl }}
       with:
         args: container:push --app dr-trendify-api web
 
@@ -44,14 +28,5 @@ jobs:
       uses: actions/heroku@master
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        NovemberScraperConfig__BaseUrl: ${{ secrets.NovemberBaseUrl }}
-        NovemberScraperConfig__PricePath: ${{ secrets.PricePath }}
-        NovemberScraperConfig__HistoryPath: ${{ secrets.HistoryPath }}
-        NovemberScraperConfig__IndicatorPath: ${{ secrets.IndicatorPath }}
-        NovemberScraperConfig__AlfaIdListUrl: ${{ secrets.AlfaIdListUrl }}
-        RedisConfiguration__ConnectionString: ${{ secrets.RedisConnectionString }}
-        CatConfig__Key: ${{ secrets.CatConfigKey }}
-        AlfaScraperConfig__BaseUrl: ${{ secrets.AlfaBaseUrl }}
-        AlfaScraperConfig__DetailsUrl: ${{ secrets.AlfaDetailsUrl }}
       with:
         args: container:release --app dr-trendify-api web
