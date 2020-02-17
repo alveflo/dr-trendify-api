@@ -6,6 +6,9 @@ namespace DrTrendify.Core.Entities
         public string AlfaId { get; set; }
 
         public string Name { get; set; }
+        public double Price { get; set; }
+        public string MarketplaceCountry { get; set; }
+        public string Country { get; set; }
 
         public double YieldOneMonth { get; set; }
         public double YieldThreeMonths { get; set; }
@@ -17,6 +20,7 @@ namespace DrTrendify.Core.Entities
         public double EarningsPerShare { get; set; }
         public double DividendPerShare { get; set; }
         public double DividendYield { get; set; }
+
         public bool IsAllPositiveYield() => 
                     YieldOneYear > 0
                     && YieldSixMonths > 0

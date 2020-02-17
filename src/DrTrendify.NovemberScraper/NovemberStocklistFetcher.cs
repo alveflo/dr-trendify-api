@@ -119,6 +119,9 @@ namespace DrTrendify.NovemberScraper
             {
                 Id = priceDetail.Id.ToString(),
                 Name = priceDetail.Name,
+                Price = priceDetail.Lastprice ?? 0,
+                MarketplaceCountry = priceDetail.MarketplaceCountry,
+                Country = priceDetail.Country,
 
                 DividendYield = indicatorDetail.Dividendyield ?? 0,
                 DividendPerShare = indicatorDetail.Dividend ?? 0,

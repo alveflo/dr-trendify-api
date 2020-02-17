@@ -47,7 +47,7 @@ namespace DrTrendify.Api.Controllers
         public IActionResult GetTrending()
         {
             var stockDetails = _getStockdetailsService.GetStockDetails()
-                .Where(x => x.IsTrending());
+                .Where(x => x.IsTrending() && x.DividendYield > 0);
 
             return Ok(stockDetails);
         }
