@@ -3,6 +3,7 @@ using DrTrendify.Core.Services.PopulateStockdetails;
 using DrTrendify.Core.Services.GetStockdetails;
 using DrTrendify.Core.Services.GetStockdetailById;
 using System.Linq;
+using DrTrendify.Core.FeatureToggling.Exceptions;
 
 namespace DrTrendify.Api.Controllers
 {
@@ -61,9 +62,16 @@ namespace DrTrendify.Api.Controllers
         [HttpGet("populate")]
         public IActionResult PopulateData() 
         {
-            _populateStockdetailsService.Populate();
+            try
+            {
+                _populateStockdetailsService.Populate();
 
-            return Ok();
+                return Ok("Data was populated successfully.");
+            }
+            catch (FeatureFlagNotEnabledException e)
+            {
+                return Ok($"Data was not populated, due to kill switch is on: {e.FeatureFlagName}.");
+            }
         }
     }
 }

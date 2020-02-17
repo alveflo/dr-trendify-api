@@ -27,7 +27,9 @@ jobs:
         NovemberScraperConfig__IndicatorPath: ${{ secrets.IndicatorPath }}
         NovemberScraperConfig__AlfaIdListUrl: ${{ secrets.AlfaIdListUrl }}
         RedisConfiguration__ConnectionString: ${{ secrets.RedisConnectionString }}
-        ConfigCatConfig__ApiKey: ${{ secret.ConfigCatApiKey }}
+        ConfigCatConfig__ApiKey: ${{ secrets.ConfigCatApiKey }}
+        AlfaScraperConfig__BaseUrl: ${{ secrets.AlfaBaseUrl }}
+        AlfaScraperConfig__DetailsPath: ${{ secrets.AlfaDetailsUrl }}
       with:
         args: container:push --app dr-trendify-api web
 
@@ -41,6 +43,8 @@ jobs:
         NovemberScraperConfig__IndicatorPath: ${{ secrets.IndicatorPath }}
         NovemberScraperConfig__AlfaIdListUrl: ${{ secrets.AlfaIdListUrl }}
         RedisConfiguration__ConnectionString: ${{ secrets.RedisConnectionString }}
-        ConfigCatConfig__ApiKey: ${{ secret.ConfigCatApiKey }}
+        ConfigCatConfig__ApiKey: ${{ secrets.ConfigCatApiKey }}
+        AlfaScraperConfig__BaseUrl: ${{ secrets.AlfaBaseUrl }}
+        AlfaScraperConfig__DetailsUrl: ${{ secrets.AlfaDetailsUrl }}
       with:
         args: container:release --app dr-trendify-api web

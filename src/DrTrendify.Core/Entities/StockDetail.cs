@@ -20,6 +20,7 @@ namespace DrTrendify.Core.Entities
         public double EarningsPerShare { get; set; }
         public double DividendPerShare { get; set; }
         public double DividendYield { get; set; }
+        public bool IsBabyrageTrending { get; set; }
 
         public bool IsAllPositiveYield() => 
                     YieldOneYear > 0

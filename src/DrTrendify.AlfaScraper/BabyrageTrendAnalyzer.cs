@@ -114,12 +114,12 @@ namespace DrTrendify.AlfaScraper
 
         private AlfaTAValues Get(string stockId)
         {
-            var request = (IRestRequest) new RestRequest($"{_config.BaseUrl}/{_config.DetailsPath}", DataFormat.Json);
+            var request = (IRestRequest) new RestRequest($"{_config.BaseUrl.Trim('/')}/{_config.DetailsPath.Trim('/')}", DataFormat.Json);
             var body = new {
                 orderbookId = stockId,
-                chartType = "area",
+                chartType = "AREA",
                 widthOfPlotContainer = 558,
-                chartResolution = "day",
+                chartResolution = "DAY",
                 navigator = false,
                 percentage = false,
                 volume = false,
@@ -131,11 +131,11 @@ namespace DrTrendify.AlfaScraper
                         timeFrame = 21
                     },
                     new {
-                        type = "ma",
+                        type = "sma",
                         timeFrame = 50
                     },
                     new {
-                        type = "ma",
+                        type = "sma",
                         timeFrame = 200
                     },
                 },
@@ -145,11 +145,16 @@ namespace DrTrendify.AlfaScraper
             request = request.AddHeader("Content-Type", "application/json");
             request = request.AddHeader("Access-Control-Allow-Origin", "*");
             request = request.AddHeader("Cache-Control", "no-cache");
-            request = request.AddHeader("Referer", "http://www.example.com/");
-            request = request.AddHeader("Origin", "http://www.example.com/");
+            request = request.AddHeader("Referer", "https://www.example.com");
+            request = request.AddHeader("Origin", "https://www.example.com");
             request = request.AddJsonBody(body);
 
             var response = _client.Post(request);
+
+            if (!response.IsSuccessful)
+            {
+                throw new ArgumentException($"Unable to communicate with Alfa systems: {response.ErrorMessage}");
+            }
 
             var alfaResponse = JsonConvert.DeserializeObject<AlfaResponse>(response.Content);
 

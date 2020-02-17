@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ConfigCat.Client;
 using DrTrendify.Core.FeatureToggling;
+using DrTrendify.Core.FeatureToggling.Exceptions;
 
 namespace DrTrendify.FeatureToggling.ConfigCat
 {
@@ -31,6 +32,18 @@ namespace DrTrendify.FeatureToggling.ConfigCat
         public Task InvalidateCacheAsync()
         {
             return _configCatClient.ForceRefreshAsync();
+        }
+
+        public void EnsureFeatureEnabled(string featureFlagName)
+        {
+            if (!IsFeatureEnabled(featureFlagName))
+                throw new FeatureFlagNotEnabledException(featureFlagName);
+        }
+
+        public async Task EnsureFeatureEnabledAsync(string featureFlagName)
+        {
+            if (!await IsFeatureEnabledAsync(featureFlagName))
+                throw new FeatureFlagNotEnabledException(featureFlagName);
         }
     }
 }
