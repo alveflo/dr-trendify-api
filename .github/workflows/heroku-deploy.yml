@@ -27,7 +27,7 @@ jobs:
         NovemberScraperConfig__IndicatorPath: ${{ secrets.IndicatorPath }}
         NovemberScraperConfig__AlfaIdListUrl: ${{ secrets.AlfaIdListUrl }}
         RedisConfiguration__ConnectionString: ${{ secrets.RedisConnectionString }}
-        ConfigCatConfig__Key: ${{ secrets.ConfigCatKey }}
+        ConfigCatConfig__Key: Test
         AlfaScraperConfig__BaseUrl: ${{ secrets.AlfaBaseUrl }}
         AlfaScraperConfig__DetailsPath: ${{ secrets.AlfaDetailsUrl }}
       with:
@@ -43,7 +43,7 @@ jobs:
         NovemberScraperConfig__IndicatorPath: ${{ secrets.IndicatorPath }}
         NovemberScraperConfig__AlfaIdListUrl: ${{ secrets.AlfaIdListUrl }}
         RedisConfiguration__ConnectionString: ${{ secrets.RedisConnectionString }}
-        ConfigCatConfig__Key: ${{ secrets.ConfigCatKey }}
+        ConfigCatConfig__Key: Test
         AlfaScraperConfig__BaseUrl: ${{ secrets.AlfaBaseUrl }}
         AlfaScraperConfig__DetailsUrl: ${{ secrets.AlfaDetailsUrl }}
       with:
