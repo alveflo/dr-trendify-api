@@ -15,10 +15,14 @@ namespace DrTrendify.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
+#if DEBUG
                     config
                         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-                        .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: false)
+                        .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: false);
+#else
+                    config
                         .AddEnvironmentVariables();
+#endif
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
