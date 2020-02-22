@@ -1,3 +1,5 @@
+using System;
+
 namespace DrTrendify.Core.Entities
 {
     public class StockDetail
@@ -21,12 +23,13 @@ namespace DrTrendify.Core.Entities
         public double DividendPerShare { get; set; }
         public double DividendYield { get; set; }
         public bool IsBabyrageTrending { get; set; }
+        public DateTime LastModifiedDate { get; internal set; }
 
         public bool IsAllPositiveYield() => 
-                    YieldOneYear > 0
-                    && YieldSixMonths > 0
-                    && YieldThreeMonths > 0
-                    && YieldOneMonth > 0;
+                        YieldOneYear > 0
+                        && YieldSixMonths > 0
+                        && YieldThreeMonths > 0
+                        && YieldOneMonth > 0;
         public bool IsTrending() =>
                     IsAllPositiveYield()
                     && YieldOneMonth < YieldThreeMonths

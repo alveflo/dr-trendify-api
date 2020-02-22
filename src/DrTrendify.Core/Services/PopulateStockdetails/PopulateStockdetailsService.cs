@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DrTrendify.Core.Entities;
 using DrTrendify.Core.FeatureToggling;
@@ -45,6 +46,8 @@ namespace DrTrendify.Core.Services.PopulateStockdetails
                 {
                     stockDetail.IsBabyrageTrending = _babyrageTrendAnalyzer.IsTrending(stockDetail);
                 }
+
+                stockDetail.LastModifiedDate = DateTime.UtcNow;
             }
 
             return stockDetails;
