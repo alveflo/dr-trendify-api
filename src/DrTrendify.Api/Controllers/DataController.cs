@@ -46,11 +46,39 @@ namespace DrTrendify.Api.Controllers
         }
 
         [HttpGet("trending/{market}")]
-        public IActionResult GetTrending(Market market)
+        public IActionResult GetTrendingByMarket(Market market)
         {
             var stockDetails = _getStockdetailsService.GetStockDetails()
                 .Where(x => x.IsTrending() && x.DividendYield > 0)
                 .Where(x => x.Market == market);
+
+            return Ok(stockDetails);
+        }
+
+        [HttpGet("trending")]
+        public IActionResult GetTrending()
+        {
+            var stockDetails = _getStockdetailsService.GetStockDetails()
+                .Where(x => x.IsTrending() && x.DividendYield > 0)
+                .OrderByDescending(x => x.YieldOneMonth)
+                .ThenByDescending(x => x.YieldThreeMonths)
+                .ThenByDescending(x => x.YieldSixMonths)
+                .ThenByDescending(x => x.YieldOneYear)
+                .ToList();
+
+            return Ok(stockDetails);
+        }
+
+        [HttpGet("babyrage")]
+        public IActionResult GetTrendingBabyRage()
+        {
+            var stockDetails = _getStockdetailsService.GetStockDetails()
+                .Where(x => x.IsBabyrageTrending)
+                .OrderByDescending(x => x.YieldOneMonth)
+                .ThenByDescending(x => x.YieldThreeMonths)
+                .ThenByDescending(x => x.YieldSixMonths)
+                .ThenByDescending(x => x.YieldOneYear)
+                .ToList();
 
             return Ok(stockDetails);
         }

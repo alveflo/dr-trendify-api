@@ -10,7 +10,7 @@ using System;
 
 namespace DrTrendify.NovemberScraper
 {
-  public class NovemberScraperConfig 
+    public class NovemberScraperConfig 
     {
         public string BaseUrl { get; set; }
         public string MarketPathsStr { get; set; }
