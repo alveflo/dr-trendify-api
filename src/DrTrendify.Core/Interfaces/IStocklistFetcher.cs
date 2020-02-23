@@ -5,6 +5,6 @@ namespace DrTrendify.Core.Interfaces
 {
     public interface IStocklistFetcher
     {
-         IEnumerable<StockDetail> GetStockDetails();
+         IEnumerable<StockDetail> GetStockDetails(Market market);
     }
 }

@@ -4,6 +4,7 @@ using DrTrendify.Core.Services.GetStockdetails;
 using DrTrendify.Core.Services.GetStockdetailById;
 using System.Linq;
 using DrTrendify.Core.FeatureToggling.Exceptions;
+using DrTrendify.Core.Entities;
 
 namespace DrTrendify.Api.Controllers
 {
@@ -44,11 +45,12 @@ namespace DrTrendify.Api.Controllers
             return Ok(stockDetails);
         }
 
-        [HttpGet("trending")]
-        public IActionResult GetTrending()
+        [HttpGet("trending/{market}")]
+        public IActionResult GetTrending(Market market)
         {
             var stockDetails = _getStockdetailsService.GetStockDetails()
-                .Where(x => x.IsTrending() && x.DividendYield > 0);
+                .Where(x => x.IsTrending() && x.DividendYield > 0)
+                .Where(x => x.Market == market);
 
             return Ok(stockDetails);
         }
@@ -59,14 +61,14 @@ namespace DrTrendify.Api.Controllers
             return Ok(_getStockdetailsService.GetStockDetails());
         }
 
-        [HttpGet("populate")]
-        public IActionResult PopulateData() 
+        [HttpGet("populate/{market}")]
+        public IActionResult PopulateData(Market market) 
         {
             try
             {
-                _populateStockdetailsService.Populate();
+               _populateStockdetailsService.Populate(market);
 
-                return Ok("Data was populated successfully.");
+                return Ok($"Data was successfully populated for {market}.");
             }
             catch (FeatureFlagNotEnabledException e)
             {

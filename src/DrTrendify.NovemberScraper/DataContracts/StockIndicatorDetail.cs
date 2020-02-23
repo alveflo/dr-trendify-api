@@ -1,8 +1,9 @@
+using DrTrendify.Core.Entities;
 using Newtonsoft.Json;
 
 namespace DrTrendify.NovemberScraper.DataContracts
 {
-    internal sealed class StockIndicatorDetail
+    internal sealed class StockIndicatorDetail : IStockDetail
     {
         [JsonProperty("insref")]
         public long Id { get; set; }
@@ -51,5 +52,6 @@ namespace DrTrendify.NovemberScraper.DataContracts
 
         [JsonProperty("fiscalperiod")]
         public long? Fiscalperiod { get; set; }
+        public Market Market { get; set; }
     }
 }

@@ -42,6 +42,11 @@ namespace DrTrendify.AlfaScraper
                 throw new ArgumentNullException(nameof(stockDetail));
             }
 
+            if (string.IsNullOrWhiteSpace(stockDetail.AlfaId))
+            {
+                return false;
+            }
+
             return Analyze(Get(stockDetail.AlfaId));
         }
 

@@ -26,11 +26,11 @@ namespace DrTrendify.Core.Services.PopulateStockdetails
             _repository = repository;
         }
 
-        public void Populate()
+        public void Populate(Market market)
         {
             _featureFlagProvider.EnsureFeatureEnabled(FeatureFlags.StocklistFetcherKillSwitch);
 
-            var stockDetails = _fetcher.GetStockDetails();
+            var stockDetails = _fetcher.GetStockDetails(market);
             stockDetails = AddBabyrageResults(stockDetails);
 
             _repository.Upsert(stockDetails);
@@ -44,7 +44,14 @@ namespace DrTrendify.Core.Services.PopulateStockdetails
             {
                 if (stockDetail.IsTrending())
                 {
-                    stockDetail.IsBabyrageTrending = _babyrageTrendAnalyzer.IsTrending(stockDetail);
+                    try
+                    {
+                        stockDetail.IsBabyrageTrending = _babyrageTrendAnalyzer.IsTrending(stockDetail);
+                    }
+                    catch (System.Exception)
+                    {
+                        // Log error to somewhere...
+                    }
                 }
 
                 stockDetail.LastModifiedDate = DateTime.UtcNow;

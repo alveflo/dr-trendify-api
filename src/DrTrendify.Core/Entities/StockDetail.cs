@@ -2,9 +2,21 @@ using System;
 
 namespace DrTrendify.Core.Entities
 {
+    public enum Market
+    {
+        OMX_Stockholm = 1,
+        OMX_Copenhagen = 2,
+        OMX_Helsinki = 3,
+        FirstNorth_Stockholm = 4,
+        FirstNorth_Copenhagen = 5,
+        Aktietorget = 6
+    }
+
     public class StockDetail
     {
         public string Id { get; set; }
+        public Market Market { get; set; }
+        public string MarketName => Market.ToString();
         public string AlfaId { get; set; }
 
         public string Name { get; set; }
@@ -23,7 +35,7 @@ namespace DrTrendify.Core.Entities
         public double DividendPerShare { get; set; }
         public double DividendYield { get; set; }
         public bool IsBabyrageTrending { get; set; }
-        public DateTime LastModifiedDate { get; internal set; }
+        public DateTime LastModifiedDate { get; set; }
 
         public bool IsAllPositiveYield() => 
                         YieldOneYear > 0
