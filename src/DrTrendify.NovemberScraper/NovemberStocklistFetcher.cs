@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using RestSharp;
 using DrTrendify.Core.Interfaces;
@@ -11,10 +10,11 @@ using System;
 
 namespace DrTrendify.NovemberScraper
 {
-    public class NovemberScraperConfig 
+  public class NovemberScraperConfig 
     {
         public string BaseUrl { get; set; }
-        public string[] MarketPaths { get; set; }
+        public string MarketPathsStr { get; set; }
+        public string[] MarketPaths => MarketPathsStr.Split(';');
         public string PricePath { get; set; }
         public string HistoryPath { get; set; }
         public string IndicatorPath { get; set; }
