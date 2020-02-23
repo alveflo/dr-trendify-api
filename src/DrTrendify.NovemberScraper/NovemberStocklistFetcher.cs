@@ -61,7 +61,8 @@ namespace DrTrendify.NovemberScraper
                         normalizedName = $"{normalizedName} oyj";
                         alfaId = alfaIds.FirstOrDefault(x => Decode(x.Name) == normalizedName);
                     }
-                    else if (AlfaIdLookup.Lookup.ContainsKey(stockDetail.Id))
+
+                    if (alfaId == null && AlfaIdLookup.Lookup.ContainsKey(stockDetail.Id))
                     {
                         var id = AlfaIdLookup.Lookup[stockDetail.Id];
                         alfaId = alfaIds.FirstOrDefault(x => x.Id == id);
