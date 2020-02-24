@@ -49,7 +49,7 @@ namespace DrTrendify.Api.Controllers
         public IActionResult GetTrendingByMarket(Market market)
         {
             var stockDetails = _getStockdetailsService.GetStockDetails()
-                .Where(x => x.IsTrending() && x.DividendYield > 0)
+                .Where(x => x.IsBabyrageTrending)
                 .Where(x => x.Market == market);
 
             return Ok(stockDetails);
@@ -59,7 +59,7 @@ namespace DrTrendify.Api.Controllers
         public IActionResult GetTrending()
         {
             var stockDetails = _getStockdetailsService.GetStockDetails()
-                .Where(x => x.IsTrending() && x.DividendYield > 0)
+                .Where(x => x.IsBabyrageTrending)
                 .OrderByDescending(x => x.YieldOneMonth)
                 .ThenByDescending(x => x.YieldThreeMonths)
                 .ThenByDescending(x => x.YieldSixMonths)
