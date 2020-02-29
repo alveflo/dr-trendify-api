@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace DrTrendify.Api
 {
-    public class Program
+  public class Program
     {
         public static void Main(string[] args)
         {
@@ -15,18 +15,16 @@ namespace DrTrendify.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-#if DEBUG
                     config
                         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
                         .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: false);
-#else
                     config
                         .AddEnvironmentVariables();
-#endif
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSentry();
 #if DEBUG
 #else
                     var port = System.Environment.GetEnvironmentVariable("PORT");

@@ -8,6 +8,11 @@
     <ProjectReference Include="..\DrTrendify.FeatureToggling.ConfigCat\DrTrendify.FeatureToggling.ConfigCat.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Sentry" Version="2.1.0" />
+    <PackageReference Include="Sentry.AspNetCore" Version="2.1.0" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
