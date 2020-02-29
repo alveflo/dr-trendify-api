@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrTrendify.Api.Controllers
@@ -10,7 +9,7 @@ namespace DrTrendify.Api.Controllers
         [HttpGet]
         public IActionResult Ping()
         {
-            throw new NotImplementedException();
+            return Ok();
         }
     }
 }
